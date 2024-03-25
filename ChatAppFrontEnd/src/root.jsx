@@ -45,12 +45,7 @@ export default function Root() {
           )}
         </ul>
       </nav>
-      {username ? (
-        <div> {username} is logged in</div>
-      ) : (
-        <div>You are not logged in</div>
-      )}
-      {username}
+      <div>Hello {username}!</div>
       <Chat />
     </>
   );

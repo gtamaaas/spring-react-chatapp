@@ -16,41 +16,44 @@ export async function action({ request }) {
   return "good";
 }
 
-// const messages = [
-//   {
-//     user: "asd",
-//     content: "asdasdsada",
-//   },
-//   {
-//     user: "asd",
-//     content: "asdasdsada",
-//   },
-// ];
-
 export default function Chat() {
   const { messages } = useRouteLoaderData("root");
-  console.log(messages[0]);
-  const listOfMessages = messages.map((message) => (
-    <div className="messagerow">
-      <span>
-        {message.user.username} - {message.timestamp}
-      </span>
-      <p className="message">{message.content}</p>
-    </div>
-  ));
+  const { username } = useRouteLoaderData("root");
+  const listOfMessages = messages.map((message) => {
+    if (username === message.user.username)
+      return (
+        <div className="messagerowMe">
+          <span>
+            {message.user.username} - {message.timestamp}
+          </span>
+          <p className="messageMe">{message.content}</p>
+        </div>
+      );
+    else
+      return (
+        <div className="messagerow">
+          <span>
+            {message.user.username} - {message.timestamp}
+          </span>
+          <p className="message">{message.content}</p>
+        </div>
+      );
+  });
 
   return (
-    <div className="wrapper">
+    <div className="chatwrapper">
       <h1>Global Chatroom</h1>
-      <div className="messages">{listOfMessages}</div>
-      <Form method="post">
-        <input
-          className="textbox"
-          type="text"
-          name="message"
-          placeholder="Enter your text here"
-        />
-      </Form>
+      <div className="messages">
+        {listOfMessages}
+        <Form method="post">
+          <input
+            className="textbox"
+            type="text"
+            name="message"
+            placeholder="Enter your text here"
+          />
+        </Form>
+      </div>
     </div>
   );
 }
