@@ -1,4 +1,4 @@
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, Link } from "react-router-dom";
 import { Auth } from "../auth";
 import localforage from "localforage";
 
@@ -23,17 +23,21 @@ export async function action({ request }) {
 
 export default function Login() {
   return (
-    <div>
+    <div className="wrapper">
       <Form method="post">
-        <label>
-          Username
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" />
-        </label>
-        <button type="submit">Login</button>
+        <div className="main">
+          <h1>Login</h1>
+          <div className="row">
+            <label for="text">Username</label>
+            <input type="text" name="username" />
+          </div>
+          <div className="row">
+            <label for="text">Password</label>
+            <input type="password" name="password" />
+          </div>
+          <button> Login </button>
+          <Link to="/register"> Create new user</Link>
+        </div>
       </Form>
     </div>
   );

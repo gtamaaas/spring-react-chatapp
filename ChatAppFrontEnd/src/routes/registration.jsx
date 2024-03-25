@@ -1,4 +1,4 @@
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, Link } from "react-router-dom";
 import axios from "axios";
 
 export async function action({ request }) {
@@ -24,17 +24,21 @@ export async function action({ request }) {
 
 export default function Registration() {
   return (
-    <div>
+    <div className="wrapper">
       <Form method="post">
-        <label>
-          Username
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" />
-        </label>
-        <button type="submit">Register</button>
+        <div className="main">
+          <h1>Register</h1>
+          <div className="row">
+            <label for="text">Username</label>
+            <input type="text" name="username" />
+          </div>
+          <div className="row">
+            <label for="text">Password</label>
+            <input type="password" name="password" />
+          </div>
+          <button> Register </button>
+          <Link to="/login"> Already have an user?</Link>
+        </div>
       </Form>
     </div>
   );

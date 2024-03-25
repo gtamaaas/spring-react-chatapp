@@ -1,6 +1,99 @@
-.red {
-  background-color: red;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #dde5f4;
 }
-.blue {
-  background-color: blue;
+
+.wrapper {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: gray;
+  border-radius: 10px;
+  padding: 2em;
+  gap: 2em;
+  background-color: #f1f7fe;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: solid 1px black;
+}
+
+.row {
+  display:flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1em;
+  border-radius: 20px;
+}
+
+button {
+  cursor: pointer;
+  padding: 1em;
+  border-radius: 30px;
+  width: 100%;
+}
+
+
+/*  */
+
+.chatwrapper {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 1em;
+  min-height: 100%;
+}
+
+.messagerow {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+}
+
+.messages {
+  margin-bottom: auto;
+}
+
+.message {
+  background-color: antiquewhite;
+  width: fit-content;
+  margin-top: 0.25em;
+  padding: 0.25em;
+  border-radius: 10px;
+}
+
+.messageMe {
+  background-color: rgb(33, 131, 192);
+  width: fit-content;
+  margin-top: 0.25em;
+  padding: 0.25em;
+  border-radius: 10px;
+}
+
+.messagerowMe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: auto;
+}
+
+h1 {
+  border-bottom: 1px solid black;
+  margin-bottom: 1em;
+}
+
+input.textbox {
+  width: 100%;
 }
