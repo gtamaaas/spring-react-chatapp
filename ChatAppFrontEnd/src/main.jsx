@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Root from "./root";
-import Registration, { action as rootAction } from "./routes/registration";
+import Root, { loader as rootLoader } from "./root";
+import Registration, { action as registerAction } from "./routes/registration";
 import Login, { action as loginAction } from "./routes/login";
 import ErrorPage from "./error-page";
+import Chat, { action as chatAction } from "./chat";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -20,27 +21,28 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    async loader() {
-      let username = await localforage.getItem("username");
-      return { username: username };
-    },
+    loader: rootLoader,
+    action: chatAction,
+    // shouldRevalidate: () => {
+    //   return false;
+    // },
     children: [
-      {
-        path: "register",
-        element: <Registration />,
-        action: rootAction,
-      },
-      {
-        path: "login",
-        element: <Login />,
-        action: loginAction,
-      },
       {
         path: "logout",
         element: <></>,
         loader: logoutLoader,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    action: loginAction,
+  },
+  {
+    path: "register",
+    element: <Registration />,
+    action: registerAction,
   },
 ]);
 

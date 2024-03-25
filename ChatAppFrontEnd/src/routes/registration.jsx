@@ -14,8 +14,8 @@ export async function action({ request }) {
       "http://localhost:8080/register",
       registrationCredentials
     );
-    alert("User is created, returning to mainpage");
-    return redirect("/");
+    alert("User is created, returning to login page");
+    return redirect("/login");
   } catch (error) {
     alert("Error: " + error.response.data);
     return { error: "something happened" };
