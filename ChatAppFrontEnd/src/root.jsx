@@ -3,8 +3,6 @@ import { useRouteLoaderData, redirect } from "react-router-dom";
 import localforage from "localforage";
 import axios from "axios";
 import Chat from "./chat";
-import { stompClient } from "./stompclient";
-
 export async function loader() {
   try {
     const response = await axios.get("http://localhost:8080/", {
@@ -12,7 +10,6 @@ export async function loader() {
     });
     console.log(response);
     let username = await localforage.getItem("username");
-    stompClient.activate();
     const messages = await axios.get("http://localhost:8080/messages");
     return { username: username, messages: messages.data };
   } catch (error) {
@@ -25,7 +22,6 @@ export async function loader() {
 
 export default function Root() {
   let { username } = useRouteLoaderData("root");
-  console.log(username);
   return (
     <>
       <nav>

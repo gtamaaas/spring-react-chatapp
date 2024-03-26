@@ -4,7 +4,7 @@ import Root, { loader as rootLoader } from "./root";
 import Registration, { action as registerAction } from "./routes/registration";
 import Login, { action as loginAction } from "./routes/login";
 import ErrorPage from "./error-page";
-import Chat, { action as chatAction } from "./chat";
+import Chat from "./chat";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,10 +22,6 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
-    action: chatAction,
-    // shouldRevalidate: () => {
-    //   return false;
-    // },
     children: [
       {
         path: "logout",
@@ -47,7 +43,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );

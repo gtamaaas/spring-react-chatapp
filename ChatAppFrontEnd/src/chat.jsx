@@ -1,28 +1,43 @@
 import { Form, redirect, useRouteLoaderData } from "react-router-dom";
-import { stompClient } from "./stompclient";
 import localforage from "localforage";
+import { useEffect, useState } from "react";
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const message = formData.get("message");
-  let username = await localforage.getItem("username");
-  stompClient.publish({
-    destination: "/hello",
-    body: JSON.stringify({
-      username: username,
-      content: message,
-    }),
-  });
-  return "good";
-}
+import { WebSocket } from "ws";
+Object.assign(global, { WebSocket });
+
+import { Client } from "@stomp/stompjs";
 
 export default function Chat() {
-  const { messages } = useRouteLoaderData("root");
+  const { messages } = useRouteLoaderData("root"); // Assuming setMessages function is available to update messages state
   const { username } = useRouteLoaderData("root");
-  const listOfMessages = messages.map((message) => {
+
+  const [message, setMessage] = useState("");
+  const [stompClient, setStompClient] = useState(null);
+  const [stateMessages, setStateMessages] = useState(messages);
+
+  useEffect(() => {
+    const client = new Client({
+      brokerURL: "ws://localhost:8080/websocket",
+      onConnect: () => {
+        console.log("Successful connection");
+        client.subscribe("/topic/messages", (message) => {
+          console.log(message.body);
+          setStateMessages((stateMessages) => [
+            ...stateMessages,
+            JSON.parse(message.body),
+          ]);
+        });
+      },
+      onWebSocketError: (error) => console.log(error),
+    });
+    client.activate();
+    setStompClient(client); // Save the Stomp client to state
+  }, []);
+
+  const listOfMessages = stateMessages.map((message) => {
     if (username === message.user.username)
       return (
-        <div className="messagerowMe">
+        <div className="messagerowMe" key={message.id}>
           <span>
             {message.user.username} - {message.timestamp}
           </span>
@@ -31,7 +46,7 @@ export default function Chat() {
       );
     else
       return (
-        <div className="messagerow">
+        <div className="messagerow" key={message.id}>
           <span>
             {message.user.username} - {message.timestamp}
           </span>
@@ -40,19 +55,33 @@ export default function Chat() {
       );
   });
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    stompClient.publish({
+      destination: "/hello",
+      body: JSON.stringify({
+        username: username,
+        content: message,
+      }),
+    });
+    setMessage("");
+  }
+
   return (
     <div className="chatwrapper">
       <h1>Global Chatroom</h1>
       <div className="messages">
         {listOfMessages}
-        <Form method="post">
+        <form method="post" onSubmit={handleSubmit}>
           <input
             className="textbox"
             type="text"
             name="message"
             placeholder="Enter your text here"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
-        </Form>
+        </form>
       </div>
     </div>
   );
