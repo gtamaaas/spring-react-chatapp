@@ -32,7 +32,6 @@ public class MainController {
             return new ResponseEntity<>("You are not logged in", HttpStatusCode.valueOf(403));
         }
         else {
-            System.out.println(currentSession.getAttribute("username") + " " + currentSession.getId());
             return new ResponseEntity<>("Hello " + currentSession.getAttribute("username"), HttpStatusCode.valueOf(200));
         }
     }
