@@ -17,8 +17,10 @@ export async function action({ request }) {
     alert("User is created, returning to login page");
     return redirect("/login");
   } catch (error) {
-    alert("Error: " + error.response.data);
-    return { error: "something happened" };
+    if (error.code === "ERR_NETWORK")
+      alert("Server is down, please try again later!");
+    else alert("Error: " + error.response.data);
+    return error;
   }
 }
 

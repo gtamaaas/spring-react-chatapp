@@ -7,7 +7,7 @@ Object.assign(global, { WebSocket });
 import { Client } from "@stomp/stompjs";
 
 export default function Chat() {
-  const { messages } = useRouteLoaderData("root"); // Assuming setMessages function is available to update messages state
+  const { messages } = useRouteLoaderData("root");
   const { username } = useRouteLoaderData("root");
 
   const [message, setMessage] = useState("");
@@ -20,7 +20,6 @@ export default function Chat() {
       onConnect: () => {
         console.log("Successful connection");
         client.subscribe("/topic/messages", (message) => {
-          console.log(message.body);
           setStateMessages((stateMessages) => [
             ...stateMessages,
             JSON.parse(message.body),
@@ -30,7 +29,7 @@ export default function Chat() {
       onWebSocketError: (error) => console.log(error),
     });
     client.activate();
-    setStompClient(client); // Save the Stomp client to state
+    setStompClient(client);
   }, []);
 
   const listOfMessages = stateMessages.map((message) => {

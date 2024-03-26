@@ -16,8 +16,10 @@ export async function action({ request }) {
     localforage.setItem("username", loginCredentials.username);
     return redirect("/");
   } catch (error) {
-    alert("Error: " + error.response.data);
-    return { error: "something happened" };
+    if (error.code === "ERR_NETWORK")
+      alert("Server is down. Please try again later!");
+    else alert("User was not found!");
+    return error;
   }
 }
 
