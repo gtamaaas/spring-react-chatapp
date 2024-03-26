@@ -18,7 +18,8 @@ public class UserHandShakeHandler extends DefaultHandshakeHandler {
                 = (ServletServerHttpRequest) request;
         HttpSession session = servletRequest
                 .getServletRequest().getSession();
-        System.out.println(session.getId() + " from UserHandShakeHandler");
+        // System.out.println(session.getId() + " from UserHandShakeHandler");
+        // todo for later version
         return new UserPrincipal("random");
     }
 }
