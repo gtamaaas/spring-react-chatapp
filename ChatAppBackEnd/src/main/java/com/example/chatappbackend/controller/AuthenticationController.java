@@ -1,5 +1,7 @@
 package com.example.chatappbackend.controller;
 
+import com.amdelamar.jhash.Hash;
+import com.amdelamar.jhash.exception.InvalidHashException;
 import com.example.chatappbackend.model.User;
 import com.example.chatappbackend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,9 @@ public class AuthenticationController {
             return new ResponseEntity<>("user already exists", HttpStatus.BAD_REQUEST);
         }
         else {
+            char[] password = user.getPassword().toCharArray();
+            String hash = Hash.password(password).create();
+            user.setPassword(hash);
             userRepository.save(user);
             return new ResponseEntity<>("user is created", HttpStatus.OK);
         }
@@ -34,12 +39,13 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    ResponseEntity<String> loginUser(@RequestBody User user, HttpServletRequest request) {
+    ResponseEntity<String> loginUser(@RequestBody User user, HttpServletRequest request) throws InvalidHashException {
         User userInDatabase = userRepository.findByUsername(user.getUsername());
         if (userInDatabase == null)
             return new ResponseEntity<>("User was not found!", HttpStatusCode.valueOf(404));
+        char[] requestPassword = user.getPassword().toCharArray();
         if (userInDatabase.getUsername().equals(user.getUsername())
-        && userInDatabase.getPassword().equals(user.getPassword())) {
+        && Hash.password(requestPassword).verify(userInDatabase.getPassword())) {
             HttpSession session = request.getSession(false);
             if (session != null)
                 session.invalidate();
