@@ -1,4 +1,4 @@
-package com.example.chatappbackend;
+package com.example.chatappbackend.controller;
 
 import com.example.chatappbackend.model.User;
 import com.example.chatappbackend.repository.UserRepository;

@@ -1,4 +1,4 @@
-package com.example.chatappbackend.websocket;
+package com.example.chatappbackend.controller;
 
 import com.example.chatappbackend.model.InboundMessage;
 import com.example.chatappbackend.model.Message;
