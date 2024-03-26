@@ -39,7 +39,7 @@ export default function Chat() {
       return (
         <div className="messagerowMe" key={message.id}>
           <span>
-            {message.user.username} - {message.timestamp}
+            {message.user.username} - {message.timestamp.substring(11, 16)}
           </span>
           <p className="messageMe">{message.content}</p>
         </div>
@@ -48,7 +48,7 @@ export default function Chat() {
       return (
         <div className="messagerow" key={message.id}>
           <span>
-            {message.user.username} - {message.timestamp}
+            {message.user.username} - {message.timestamp.substring(11, 16)}
           </span>
           <p className="message">{message.content}</p>
         </div>
@@ -57,13 +57,17 @@ export default function Chat() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    stompClient.publish({
-      destination: "/hello",
-      body: JSON.stringify({
-        username: username,
-        content: message,
-      }),
-    });
+    if (message.length > 0)
+      stompClient.publish({
+        destination: "/hello",
+        body: JSON.stringify({
+          username: username,
+          content: message,
+        }),
+      });
+    else {
+      alert("Message can't be empty!");
+    }
     setMessage("");
   }
 
