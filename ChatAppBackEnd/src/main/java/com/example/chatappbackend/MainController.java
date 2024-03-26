@@ -22,19 +22,6 @@ public class MainController {
 
     @Autowired
     MessageRepository messageRepository;
-    // original root that
-//    @GetMapping("/")
-//    ResponseEntity<String> mainPage(HttpServletRequest request) {
-//        HttpSession currentSession = request.getSession(false);
-//        if(currentSession == null) {
-//            return new ResponseEntity<>("You are not logged in", HttpStatusCode.valueOf(403));
-//        }
-//        else {
-//            System.out.println(currentSession.getAttribute("username") + " " + currentSession.getId());
-//            return new ResponseEntity<>("Hello " + currentSession.getAttribute("username"), HttpStatusCode.valueOf(200));
-//        }
-//    }
-
 
     @GetMapping("/")
     public ResponseEntity<String> mainPage(HttpServletRequest request) {
@@ -54,11 +41,5 @@ public class MainController {
     public List<Message> getMessages() {
         return messageRepository.findAll();
     }
-//
-//    @GetMapping("/")
-//    ResponseEntity<String> mainPage(HttpServletRequest request) {
-//        HttpSession currentSession = request.getSession();
-//        System.out.println(currentSession.getId() + "from / get request");
-//        return new ResponseEntity<>("Hello ", HttpStatusCode.valueOf(200));
-//    }
+
 }
