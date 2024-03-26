@@ -97,3 +97,20 @@ h1 {
 input.textbox {
   width: 100%;
 }
+
+.navbar {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  background-color: #343a40;
+  gap: 10px;
+}
+
+.navbar > a{
+  color: white;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
