@@ -1,5 +1,4 @@
-import { Form, redirect, useRouteLoaderData } from "react-router-dom";
-import localforage from "localforage";
+import { useRouteLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { WebSocket } from "ws";

@@ -4,15 +4,8 @@ import Root, { loader as rootLoader } from "./root";
 import Registration, { action as registerAction } from "./routes/registration";
 import Login, { action as loginAction } from "./routes/login";
 import ErrorPage from "./error-page";
-import Chat from "./chat";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  redirect,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import { Auth } from "./auth";
-import localforage from "localforage";
 import { loader as logoutLoader } from "./routes/logout";
 
 const router = createBrowserRouter([

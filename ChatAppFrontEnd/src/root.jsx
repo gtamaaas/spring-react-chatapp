@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRouteLoaderData, redirect } from "react-router-dom";
 import localforage from "localforage";
 import axios from "axios";
